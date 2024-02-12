@@ -1,0 +1,2 @@
+select drugId, productFullName, ndc, orderingUpc, purchasingStatus, dispensingStatus
+from prd.v_product
