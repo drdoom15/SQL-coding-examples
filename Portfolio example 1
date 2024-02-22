@@ -45,7 +45,7 @@ order by NumApps DESC
 --get an overview of the apps' ratings
 
 select min(user_rating) as MinRating,
-	   max(user_rating) as MaxRating,
+       max(user_rating) as MaxRating,
        avg(user_rating) as AvgRating
 from AppleStore
 
@@ -54,7 +54,7 @@ from AppleStore
 --determine whether paid apps have a higher rating than free apps
 
 SELECT CASE
-			when price > 0 then 'Paid'
+	    when price > 0 then 'Paid'
             else 'Free'
        end as App_Type,
        avg(user_rating) as Avg_Rating
@@ -64,7 +64,7 @@ GROUP by App_Type
 --check if apps with more supported languages have a higher rating
 
 select CASE
-			when lang_num <10 then '<10 languages'
+	    when lang_num <10 then '<10 languages'
             when lang_num between 10 and 30 then '10-30 languages'
             else '>10 languages'
        end as language_bucket,
@@ -76,7 +76,7 @@ order by Avg_Rating DESC
 --check gengres with low ratings
 
 select prime_genre,
-	   avg(user_rating) as Avg_Rating
+       avg(user_rating) as Avg_Rating
 from AppleStore
 group by prime_genre
 order by Avg_Rating ASC
@@ -85,7 +85,7 @@ limit 10
 --check if there is corrolation between the length of the app description and the user ratingAppleStore
 
 select CASE
-			when length(b.app_desc) <500 then 'Short'
+	    when length(b.app_desc) <500 then 'Short'
             when length(b.app_desc) BETWEEN 500 and 1000 then 'Medium'
             else 'Long'
        end as desciption_length_bucket,
@@ -103,14 +103,14 @@ order by average_rating DESC
 --check the top-rated apps for each genreAppleStore
 
 SELECT
-	prime_genre,
+    prime_genre,
     track_name,
     user_rating
 from (
   	  SELECT
 	  prime_genre,
-      track_name,
-      user_rating,
+          track_name,
+          user_rating,
   	  RANK () OVER(PARTITION BY prime_genre ORDER BY user_rating DESC, RATING_COUNT_TOT DESC) AS rank
   	  FROM
   	  AppleStore
